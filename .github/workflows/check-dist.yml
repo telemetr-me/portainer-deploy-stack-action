@@ -28,6 +28,9 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Set Node options
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
