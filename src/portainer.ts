@@ -73,7 +73,7 @@ export class PortainerClient {
     this.client.interceptors.request.use(
       (config: AxiosRequestConfig): AxiosRequestConfig => {
         if (!config.headers) {
-          config.headers = {};
+          config.headers = {}
         }
         if (this.token) {
           config.headers['Authorization'] = `Bearer ${this.token}`
