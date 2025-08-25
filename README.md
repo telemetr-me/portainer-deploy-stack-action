@@ -20,7 +20,7 @@ on:
 jobs:
   deploy:
     name: Deploy
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: telemetr-me/portainer-deploy-stack-action
