@@ -32,6 +32,7 @@ export interface PatchStack {
   stack: string
   vars: {[key: string]: string}
   prune: boolean
+  pull: boolean
 }
 
 export interface InputResourceControl {
@@ -72,9 +73,6 @@ export class PortainerClient {
 
     this.client.interceptors.request.use(
       (config: AxiosRequestConfig): AxiosRequestConfig => {
-        if (!config.headers) {
-          config.headers = {}
-        }
         if (this.token) {
           config.headers['Authorization'] = `Bearer ${this.token}`
         }
@@ -137,7 +135,7 @@ export class PortainerClient {
     const response = await this.client.get('/stacks', {
       params: {
         filters: JSON.stringify({
-          SwarmId: swarmId
+          SwarmID: swarmId
         })
       }
     })
@@ -175,7 +173,8 @@ export class PortainerClient {
       {
         StackFileContent: patch.stack,
         Env: env,
-        Prune: patch.prune
+        Prune: patch.prune,
+        PullImage: patch.pull
       },
       {
         params: {
@@ -194,18 +193,17 @@ export class PortainerClient {
     }))
 
     const response = await this.client.post(
-      '/stacks',
+      '/stacks/create/swarm/string',
       {
         Name: input.name,
-        StackFileContent: input.stack,
         SwarmID: swarm.id,
-        Env: env
+        StackFileContent: input.stack,
+        Env: env,
+        fromAppTemplate: false
       },
       {
         params: {
-          endpointId: input.endpointId,
-          method: 'string',
-          type: 1
+          endpointId: input.endpointId
         }
       }
     )
