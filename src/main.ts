@@ -13,12 +13,12 @@ async function run(): Promise<void> {
       await portainer.login(cfg.portainer.username, cfg.portainer.password)
     } catch (error) {
       if (error.response) {
-        core.debug('Response status:', error.response.status)
-        core.debug('Response text:', error.response.data)
+        core.debug(`Response status: ${error.response.status}`)
+        core.debug(`Response text: ${error.response.data}`)
       } else if (error.request) {
-        core.debug('No response from server:', error.request)
+        core.debug(`No response from server: ${error.request}`)
       } else {
-        core.debug('Error message:', error.message)
+        core.debug(`Error message: ${error.message}`)
       }
 
       throw error
