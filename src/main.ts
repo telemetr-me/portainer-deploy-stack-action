@@ -9,7 +9,20 @@ async function run(): Promise<void> {
 
     core.startGroup('Auth')
     const portainer = new PortainerClient(cfg.portainer.url)
-    await portainer.login(cfg.portainer.username, cfg.portainer.password)
+    try {
+      await portainer.login(cfg.portainer.username, cfg.portainer.password)
+    } catch (error) {
+      if (error.response) {
+        core.debug('Response status:', error.response.status)
+        core.debug('Response text:', error.response.data)
+      } else if (error.request) {
+        core.debug('No response from server:', error.request)
+      } else {
+        core.debug('Error message:', error.message)
+      }
+
+      throw error
+    }
     core.endGroup()
 
     core.startGroup('Get State')

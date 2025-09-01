@@ -68,7 +68,8 @@ export class PortainerClient {
     }
 
     this.client = axios.create({
-      baseURL: url.toString()
+      baseURL: url.toString(),
+      timeout: 120000
     })
 
     this.client.interceptors.request.use(
