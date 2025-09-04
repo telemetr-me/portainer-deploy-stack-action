@@ -1,4 +1,5 @@
-import axios, {AxiosInstance, AxiosRequestConfig} from 'axios'
+import axios from 'axios'
+import type {AxiosInstance, InternalAxiosRequestConfig} from 'axios'
 import {CustomError} from 'ts-custom-error'
 
 interface LoginResponse {
@@ -73,8 +74,9 @@ export class PortainerClient {
     })
 
     this.client.interceptors.request.use(
-      (config: AxiosRequestConfig): AxiosRequestConfig => {
+      (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
         if (this.token) {
+          config.headers = config.headers || {}
           config.headers['Authorization'] = `Bearer ${this.token}`
         }
 
