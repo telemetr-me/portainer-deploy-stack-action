@@ -53,5 +53,5 @@ outputs:
     description: Created docker swarm stack ID
 
 runs:
-  using: 'node16'
+  using: 'node24'
   main: 'dist/index.js'
